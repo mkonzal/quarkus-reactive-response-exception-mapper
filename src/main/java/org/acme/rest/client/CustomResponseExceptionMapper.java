@@ -13,8 +13,10 @@ import org.jboss.logging.Logger;
 public class CustomResponseExceptionMapper implements ResponseExceptionMapper<MyException> {
     @Override
     public boolean handles(final int status, final MultivaluedMap<String, Object> headers) {
-        Logger.getLogger(CustomResponseExceptionMapper.class).info("Handle is " + (status != 201));
-        return status != 201;
+        final boolean toHandle = status != 201;
+        Logger.getLogger(CustomResponseExceptionMapper.class)
+                .info("Message is " + (toHandle ? "" : "not ") + "to handle");
+        return toHandle;
     }
 
     @Override

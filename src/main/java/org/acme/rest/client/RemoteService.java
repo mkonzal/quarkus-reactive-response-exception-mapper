@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestHeader;
 
 import io.smallrye.mutiny.Uni;
@@ -22,6 +23,7 @@ public class RemoteService {
     @Consumes("text/plain")
     @Produces("text/plain")
     public Uni<Response> connect(@RestHeader("Authorization") final String authorization, final UriInfo uriInfo) {
+        Logger.getLogger(getClass()).info("Remote service call");
         if ("usr:pwd".equals(new String(Base64.getDecoder().decode(authorization.substring("Basic".length()).trim()),
                 StandardCharsets.UTF_8))) {
             return Uni.createFrom()
@@ -32,6 +34,6 @@ public class RemoteService {
                             .build());
         }
 
-        return Uni.createFrom().item(Response.status(Response.Status.BAD_REQUEST).entity("Error").build());
+        return Uni.createFrom().item(Response.status(Response.Status.BAD_REQUEST).entity("Test error message").build());
     }
 }

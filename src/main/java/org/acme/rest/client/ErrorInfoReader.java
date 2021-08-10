@@ -23,9 +23,9 @@ public class ErrorInfoReader implements MessageBodyReader<String> {
     @Override
     public boolean isReadable(final Class<?> type, final Type genericType, final Annotation[] annotations,
             final MediaType mediaType) {
-        Logger.getLogger(ErrorInfoReader.class)
-                .info("ErrorInfo is readable " + type.getSimpleName() + " " + (type == String.class));
-        return type == String.class;
+        final boolean isReadable = type == String.class;
+        Logger.getLogger(ErrorInfoReader.class).info("Message body is " + (isReadable ? "" : "not ") + "readable");
+        return isReadable;
     }
 
     @Override

@@ -17,13 +17,12 @@ import io.smallrye.mutiny.Uni;
 @Path("remote-service")
 @RegisterRestClient(configKey = "test-api")
 @ClientHeaderParam(name = "Authorization", value = "{lookupAuth}")
-// @RegisterProvider(ErrorInfoReader.class)
 @RegisterProvider(CustomResponseExceptionMapper.class)
 public interface ClientService {
     @POST
     @Consumes("text/plain")
     @Produces("text/plain")
-    Uni<Response> connect(/* ContextVariables context */);
+    Uni<Response> connect();
 
     default String lookupAuth() {
         return "Basic " + Base64.getEncoder().encodeToString("usr:pwda".getBytes());
